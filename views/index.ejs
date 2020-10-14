@@ -1,0 +1,17 @@
+<%- include("header.ejs") %>
+    <div class="box">
+        <% for(var i = 0; i < toDoItems.length; i++) { %>
+            <div class="item">
+                <input type="checkbox" id="item-<%= i %>">
+                <p>
+                    <label for="item-<%= i %>"><%= toDoItems[i] %></label>
+                </p>
+            </div>
+        <% } %>
+        <form action="/" class="class" method="POST">
+            <input type="text" name="newTask" placeholder="New Task" autocomplete="off" autofocus>
+            <button type="submit">+</button>
+        </form>
+    </div>
+
+<%- include("footer.ejs") %>
