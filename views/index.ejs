@@ -1,16 +1,26 @@
 <%- include("header.ejs") %>
     <div class="box">
         <% for(var i = 0; i < toDoItems.length; i++) { %>
-            <div class="item">
-                <input type="checkbox" id="item-<%= i %>">
-                <p>
-                    <label for="item-<%= i %>"><%= toDoItems[i].description %></label>
-                </p>
+            <div class="item__withRemoveBtn">
+                <div class="item__inner">
+                    <input type="checkbox" id="item-<%= i %>">
+                    <p>
+                        <label for="item-<%= i %>"><%= toDoItems[i].description %></label>
+                    </p>
+                </div>
+                <!-- remove task -->
+                <form action="/" method="POST">
+                    <input type="hidden" name="removeTask" value="<%= i %>">
+                    <button class="item__removeBtn" type="submit">
+                        <span class="icon-close"></span>
+                    </button>
+                </form>
             </div>
         <% } %>
+        <!--add task-->
         <form action="/" class="class" method="POST">
             <input type="text" name="newTask" placeholder="New Task" autocomplete="off" autofocus>
-            <button type="submit">+</button>
+            <button class="button" type="submit">+</button>
         </form>
     </div>
 
