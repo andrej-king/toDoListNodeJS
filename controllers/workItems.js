@@ -6,9 +6,20 @@ const encoding  = 'utf8';
 
 exports.getMainPage = (req, res) => {
     let day = date.getDate();
-    const workItemsList = Task.fetchWorkTasks();
-    res.render("work.ejs", {title: "Work List", header: day, toDoItems: workItemsList});
-	// console.log(workItemsList);
+
+    // get tasks from file
+	if(Task.fetchWorkTasks().length === 0) {
+		if (fs.existsSync(fileWorkTasks)) {
+			var array = fs.readFileSync(fileWorkTasks, encoding).toString().split("\n");
+			for (i in array) {
+				// console.log(array[i]);
+				const item = new Task(array[i]);
+				item.saveWorkTask();
+			}
+		}
+	}
+	const workItemsList = Task.fetchWorkTasks();
+	res.render("work.ejs", {title: "Work List", header: day, toDoItems: workItemsList});
 };
 
 exports.getPostNewItem = (req, res) => {

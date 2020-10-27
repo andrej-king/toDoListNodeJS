@@ -6,6 +6,18 @@ const encoding  = 'utf8';
 
 exports.getMainPage = (req, res) => {
     let day = date.getDate();
+
+	// get tasks from file
+	if(Task.fetchTasks().length === 0) {
+		if (fs.existsSync(fileTasks)) {
+			var array = fs.readFileSync(fileTasks, encoding).toString().split("\n");
+			for (i in array) {
+				// console.log(array[i]);
+				const item = new Task(array[i]);
+				item.saveTask();
+			}
+		}
+	}
     const itemsList = Task.fetchTasks();
     res.render("index.ejs", {title: "TODO List", header: day, toDoItems: itemsList});
 };
