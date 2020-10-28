@@ -6,4 +6,6 @@ router.get('/', itemsController.getMainPage);
 
 router.post('/', itemsController.getPostNewItem);
 
+router.post('/delete' , itemsController.deleteItem)
+
 module.exports = router;

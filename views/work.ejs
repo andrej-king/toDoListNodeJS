@@ -1,25 +1,20 @@
 <%- include("header.ejs") %>
     <div class="box">
         <% for(var i = 0; i < toDoItems.length; i++) { %>
-            <div class="item__withRemoveBtn">
-                <div class="item__inner">
-                    <input type="checkbox" id="item-<%= i %>">
-                    <p>
-                        <label for="item-<%= i %>"><%= toDoItems[i].description %></label>
-                    </p>
+            <form action="/deleteWork" method="POST">
+                <div class="item__withRemoveBtn">
+                    <div class="item__inner">
+                        <input type="checkbox" name="checkbox" value="<%= toDoItems[i].description %>" onchange="this.form.submit()" id="item-<%= i %>">
+                        <p>
+                            <label for="item-<%= i %>"><%= toDoItems[i].description %></label>
+                        </p>
+                    </div>
                 </div>
-                <!-- remove work task -->
-                <form action="/work" method="POST">
-                    <input type="hidden" name="removeWorkTask" value="<%= i %>">
-                    <button class="item__removeBtn" type="submit">
-                        <span class="icon-close"></span>
-                    </button>
-                </form>
-            </div>
+            </form>
         <% } %>
         <!--add work task-->
         <form action="/work" class="class" method="POST">
-            <input type="text" name="newTask" placeholder="New Work Task" autocomplete="off" autofocus>
+            <input type="text" name="newWorkTask" placeholder="New Work Task" autocomplete="off" autofocus>
             <button class="button" type="submit">+</button>
         </form>
     </div>
