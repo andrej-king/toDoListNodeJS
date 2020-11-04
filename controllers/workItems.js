@@ -1,5 +1,5 @@
 const date = require('../generateDate.js');
-const Task = require('../models/task');
+const Task = require('../models/taskFromFile');
 
 exports.getMainPage = (req, res) => {
 	Task.fetchWorkTasks(workItems => {
