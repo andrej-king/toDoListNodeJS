@@ -4,7 +4,7 @@
             <form action="/deleteWork" method="POST">
                 <div class="item__withRemoveBtn">
                     <div class="item__inner">
-                        <input type="checkbox" name="checkbox" value="<%= toDoItems[i].description %>" onchange="this.form.submit()" id="item-<%= i %>">
+                        <input type="checkbox" name="checkbox" value="<%= toDoItems[i].id %>" onchange="this.form.submit()" id="item-<%= i %>">
                         <p>
                             <label for="item-<%= i %>"><%= toDoItems[i].description %></label>
                         </p>

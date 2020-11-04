@@ -1,26 +1,43 @@
-const date = require('../generateDate.js');
-const Task = require('../models/taskFromFile');
+const date      = require('../generateDate.js');
+const mongoose  = require('mongoose');
+const WorkTask  = mongoose.model('WorkTask');
 
 exports.getMainPage = (req, res) => {
-	Task.fetchWorkTasks(workItems => {
-		let day = date.getDate();
-		res.render("work.ejs", {title: "Work List", header: day, toDoItems: workItems});
+	let day = date.getDate();
+	WorkTask.find((error, workTasks) => {
+		if (!error) {
+			res.render("work.ejs", {title: "Work List", header: day, toDoItems: workTasks});
+		} else {
+			console.log("Failed to retireve data: ", error);
+		}
 	});
 };
 
-exports.getPostNewItem = (req, res) => {
-	let newWorkTask = req.body.newWorkTask.trim();
+exports.postNewItem = (req, res) => {
+	let workItem = req.body.newWorkTask.trim();
 
-	if (newWorkTask !== '') {
-		newWorkTask = newWorkTask.trim();
-		const item = new Task(newWorkTask);
-		item.saveWorkTask();
+	if (workItem !== '') {
+		let newWorkTask = new WorkTask();
+		newWorkTask.description = workItem;
+
+		newWorkTask.save((error, response) => {
+			if (!error) {
+				res.redirect("/work");
+			} else {
+				console.log("Save task error msg: ", error);
+			}
+		});
 	}
-	res.redirect("/work");
 };
 
 exports.deleteItem = (req, res) => {
-	Task.deleteItem(req.body.checkbox, 'work');
-
-	res.redirect("/work");
+	const checkItemId = req.body.checkbox;
+	WorkTask.findByIdAndRemove(checkItemId, function (error) {
+		if (!error) {
+			console.log("Successfully delete item: ", checkItemId);
+			res.redirect("/work");
+		} else {
+			console.log("Delete error msg: ", error);
+		}
+	});
 }

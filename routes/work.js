@@ -4,7 +4,7 @@ const router            = express.Router();
 
 router.get('/work', itemsController.getMainPage);
 
-router.post('/work', itemsController.getPostNewItem);
+router.post('/work', itemsController.postNewItem);
 
 router.post('/deleteWork', itemsController.deleteItem);
 
